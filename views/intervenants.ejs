@@ -1,0 +1,32 @@
+<%- include('header.ejs') %>
+
+    <div class="container-fluid d-flex align-items-center flex-column">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Identité</th>
+                    <th>Code</th>
+                    <th>Poste</th>
+                    <th>Mail</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% Intervenants.forEach(function(entry) { %>
+                    <tr>
+                        <td>
+                            <%= entry.identite %>
+                        </td>
+                        <td>
+                            <%= entry.code %>
+                        </td>
+                        <td>
+                            <%= entry.poste %>
+                        </td>
+                        <td>
+                            <%= entry.mail %>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+    </div>

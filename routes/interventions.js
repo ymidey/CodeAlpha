@@ -1,12 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const interventions = require("../models/intervention");
-var moment = require('moment');
 
-exports.index = function(req, res) {
-        res.render('index', { moment: moment });
-    }
-    // Page racine
+// Page racine
 router.get("/", async function(req, res, next) {
     interventions.find({}, function(err, result) {
         if (err) {

@@ -16,7 +16,7 @@
                 <% Interventions.forEach(function(entry) { %>
                     <tr>
                         <td>
-                            <%= moment( new Date(entry.heureDebutReel) ).format('Do MMMM, YYYY'); %>
+                            <%= new Date(entry.heureDebutReel).getTime()+'-'+new Date(entry.heureDebutReel).getFullYear();%>
                         </td>
                         <td>
                             <%= entry.heureFinReel %>

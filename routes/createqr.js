@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var qrcode = require("qrcode");
-var path = require('path');
+var intervention = require('../models/intervention');
+const nodemailer = require("nodemailer");
+const logger = require('./logger.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -11,14 +13,55 @@ router.get('/', function(req, res, next) {
 router.post("/scan", (req, res, next) => {
     let input_identite = req.body.identite;
     let input_code = req.body.code;
-
     let input_salle = req.body.salle;
     let input_horaire_debut = req.body.horaireEntree;
     let input_horaire_fin = req.body.horaireSortie;
     let contenuQR = input_identite + "\n" + input_code + "\n" + input_salle + "\n" + input_horaire_debut + "\n" + input_horaire_fin;
 
+    let interventions = new intervention({ heureDebutReel: input_horaire_debut, heureFinReel: input_horaire_fin, salle: input_salle, code: input_code, identite: input_identite });
+    interventions.save(function(err, interventions) {
+        if (err) return console.error(err);
+        console.log(interventions.name + " saved to bookstore collection.");
+    });
     qrcode.toDataURL(contenuQR, (err, src) => {
-        if (err) res.send("Un problème est survenu !!!");
+        if (err) {
+            res.send("Un problème est survenu !!!");
+            logger.error('Error message');
+        }
+
+        var transport = nodemailer.createTransport({
+            host: "smtp.mailtrap.io",
+            port: 2525,
+            auth: {
+                user: "da29124109cb96",
+                pass: "324a459bac6219"
+            }
+        });
+
+        let mailOptions = {
+            from: 'qrident@exemple.com',
+            to: input_code + '@gmail.com',
+            subject: "QRCode",
+            text: "Envoi de QRCode",
+            html: 'QRCode de "' + input_identite + '" : <img src="' + src + '"/>',
+            attachments: [{
+                filename: src,
+                cid: src // Mettre à l'identique img src
+            }]
+        };
+
+        transport.sendMail(mailOptions, function(error, info) {
+            if (error) {
+                logger.error("mail pas bien envoyé");
+                console.log(error);
+            } else {
+                logger.info("mail bien envoyé");
+                console.log('Email sent: ' + info.response);
+            }
+        });
+
+        logger.info(input_identite, input_horaire_debut, input_horaire_fin, input_code, input_salle);
+
         res.render("createqr", {
             title: "Générateur QR Code",
             saisie: false,

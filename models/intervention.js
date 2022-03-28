@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let Intervenants = new Schema({
-    nom: String,
-    prenom: String,
+let Interventions = new Schema({
+    heureDebutReel: Date,
+    heureFinReel: Date,
+    salle: String,
     code: String,
-    mail: String,
-    poste: String,
+    identite: String,
 })
-module.exports = mongoose.model('Intervenants', Intervenants, 'Intervenants');
+module.exports = mongoose.model('Interventions', Interventions, 'Interventions');

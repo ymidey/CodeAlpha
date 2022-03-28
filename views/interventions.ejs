@@ -1,16 +1,37 @@
 <%- include('header.ejs') %>
 
     <div class="container-fluid d-flex align-items-center flex-column">
-        <table id="tableau_intervenants">
-            <tr>
-                <td>code</td>
-                <td>salle</td>
-                <td>heure début prévue</td>
-                <td>heure début réelle</td>
-                <td>heure de fin prévue</td>
-                <td>heure de fin réelle</td>
-            </tr>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>heureDebutReel</th>
+                    <th>heureFinReel</th>
+                    <th>salle</th>
+                    <th>code</th>
+                    <th>identite</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% Interventions.forEach(function(entry) { %>
+                    <tr>
+                        <td>
+                            <%= moment( new Date(entry.heureDebutReel) ).format('Do MMMM, YYYY'); %>
+                        </td>
+                        <td>
+                            <%= entry.heureFinReel %>
+                        </td>
+                        <td>
+                            <%= entry.salle %>
+                        </td>
+                        <td>
+                            <%= entry.code %>
+                        </td>
+                        <td>
+                            <%= entry.identite %>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </tbody>
         </table>
     </div>
-
-    </html>

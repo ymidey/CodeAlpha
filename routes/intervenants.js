@@ -10,7 +10,7 @@ router.get("/", async function(req, res, next) {
             res.send(err);
         } else {
             res.render("Intervenants", {
-                title: "Intervenant",
+                title: "Intervenants",
                 Intervenants: result,
             });
             console.log(result);

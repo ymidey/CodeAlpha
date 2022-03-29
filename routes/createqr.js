@@ -15,10 +15,9 @@ router.post("/scan", (req, res, next) => {
     let input_code = req.body.code;
     let input_salle = req.body.salle;
     let input_horaire_debut = req.body.horaireEntree;
-    let input_horaire_fin = req.body.horaireSortie;
-    let contenuQR = input_identite + "\n" + input_code + "\n" + input_salle + "\n" + input_horaire_debut + "\n" + input_horaire_fin;
+    let contenuQR = input_identite + "\n" + input_code + "\n" + input_salle + "\n" + input_horaire_debut;
 
-    let interventions = new intervention({ heureDebutReel: input_horaire_debut, heureFinReel: input_horaire_fin, salle: input_salle, code: input_code, identite: input_identite });
+    let interventions = new intervention({ heureDebutPrevu: input_horaire_debut, salle: input_salle, code: input_code, identite: input_identite });
     interventions.save(function(err, interventions) {
         if (err) return console.error(err);
         console.log(interventions.name + " saved to bookstore collection.");
@@ -60,7 +59,7 @@ router.post("/scan", (req, res, next) => {
             }
         });
 
-        logger.info(input_identite, input_horaire_debut, input_horaire_fin, input_code, input_salle);
+        logger.info(input_identite, input_horaire_debut, input_code, input_salle);
 
         res.render("createqr", {
             title: "Générateur QR Code",

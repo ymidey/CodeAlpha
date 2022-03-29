@@ -4,11 +4,13 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>heureDebutReel</th>
-                    <th>heureFinReel</th>
-                    <th>salle</th>
-                    <th>code</th>
-                    <th>identite</th>
+                    <th>Identité</th>
+                    <th>Code</th>
+                    <th>Salle</th>
+                    <th>Date</th>
+                    <th>Heure d'entrée prévue</th>
+                    <th>Heure d'entrée Réelle</th>
+                    <th>Heure de sortie Réelle</th>
                 </tr>
             </thead>
 
@@ -16,19 +18,25 @@
                 <% Interventions.forEach(function(entry) { %>
                     <tr>
                         <td>
-                            <%= new Date(entry.heureDebutReel).getTime()+'-'+new Date(entry.heureDebutReel).getFullYear();%>
-                        </td>
-                        <td>
-                            <%= entry.heureFinReel %>
-                        </td>
-                        <td>
-                            <%= entry.salle %>
+                            <%= entry.identite %>
                         </td>
                         <td>
                             <%= entry.code %>
                         </td>
                         <td>
-                            <%= entry.identite %>
+                            <%= entry.salle %>
+                        </td>
+                        <td>
+                            <%= new Date(entry.heureDebutPrevu).getDate()+'-'+new Date(entry.heureDebutPrevu).getMonth()+'-'+new Date(entry.heureDebutPrevu).getFullYear();%>
+                        </td>
+                        <td>
+                            <%= new Date(entry.heureDebutPrevu).getHours()+' h '+new Date(entry.heureDebutPrevu).getMinutes();%>
+                        </td>
+                        <td>
+                            <%= new Date(entry.heureDebutReel).getHours()+' h '+new Date(entry.heureDebutReel).getMinutes();%>
+                        </td>
+                        <td>
+                            <%= new Date(entry.heureFinReel).getHours()+' h '+new Date(entry.heureFinReel).getMinutes();%>
                         </td>
                     </tr>
                     <% }); %>

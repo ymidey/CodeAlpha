@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let Interventions = new Schema({
-    heureDebutReel: Date,
-    heureFinReel: Date,
+    heureDebutPrevu: Date,
     salle: String,
     code: String,
     identite: String,

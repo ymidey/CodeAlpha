@@ -31,6 +31,7 @@
                 </form>
 
                 <% } else { %>
-                    <h3>Voici le QR Code généré :</h3>
-                    <img src=<%=qr_code %> alt="QR Code">
+                    <div class="qr-code">
+                        <h3>Voici le QR Code généré :</h3>
+                        <img id="qrcode" src=<%=qr_code %> alt="QR Code"></div>
                     <% } %>

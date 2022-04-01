@@ -27,7 +27,7 @@
                             <%= entry.salle %>
                         </td>
                         <td>
-                            <%= new Date(entry.heureDebutPrevu).getDate()+'-'+new Date(entry.heureDebutPrevu).getMonth()+'-'+new Date(entry.heureDebutPrevu).getFullYear();%>
+                            <%= new Date(entry.heureDebutPrevu).getDate()+'-'+(new Date(entry.heureDebutPrevu).getMonth()+1)+'-'+new Date(entry.heureDebutPrevu).getFullYear();%>
                         </td>
                         <td>
                             <%= new Date(entry.heureDebutPrevu).getHours()+' h '+new Date(entry.heureDebutPrevu).getMinutes();%>

@@ -15,8 +15,8 @@ router.post("/scan", (req, res, next) => {
     let input_code = req.body.code;
     let input_salle = req.body.salle;
     let input_horaire_debut = req.body.horaireEntree;
-    let input_entree_reelle = "";
-    let input_sortie_reelle = "";
+    let input_entree_reelle = null;
+    let input_sortie_reelle = null;
     let contenuQR = input_identite + "\n" + input_code + "\n" + input_salle + "\n" + input_horaire_debut;
 
     let interventions = new intervention({ heureDebutPrevu: input_horaire_debut, salle: input_salle, code: input_code, identite: input_identite, heureEntreeReelle: input_entree_reelle, heureSortieReelle: input_sortie_reelle });

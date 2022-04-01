@@ -6,5 +6,7 @@ let Interventions = new Schema({
     salle: String,
     code: String,
     identite: String,
+    heureEntreeReelle: String,
+    heureSortieReelle: String,
 })
 module.exports = mongoose.model('Interventions', Interventions, 'Interventions');

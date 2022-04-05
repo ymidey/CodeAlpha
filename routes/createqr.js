@@ -34,8 +34,8 @@ router.post("/scan", (req, res, next) => {
             host: "smtp.mailtrap.io",
             port: 2525,
             auth: {
-                user: "da29124109cb96",
-                pass: "324a459bac6219"
+                user: "5bd491f8d6dc20",
+                pass: "d8b17bf2561cc0"
             }
         });
 

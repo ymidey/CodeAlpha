@@ -25,3 +25,57 @@
     background-color: #04AA6D;
     color: white;
 }
+
+#salle {
+    border-radius: 10px;
+    width: 50px;
+}
+
+#identite {
+    border-radius: 10px;
+}
+
+.form-group {
+    color: white;
+    background: #2c80ff;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    margin-top: 20px;
+    padding: 25px;
+    border-radius: 7px;
+    box-shadow: 5px 10px 10px 5px gray;
+}
+
+.buttonnephy {
+    background-color: #303030;
+    color: white;
+    border-radius: 7px;
+    text-decoration: none;
+    border: none;
+    height: 40px;
+    margin-left: 35%;
+}
+
+#myTR {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#myTR td p {
+    border: 1px solid #ddd;
+    /* Add a border to all links */
+    margin-top: -1px;
+    /* Prevent double borders */
+    background-color: #f6f6f6;
+    /* Grey background color */
+    padding: 12px;
+    /* Add some padding */
+    text-decoration: none;
+    /* Remove default text underline */
+    font-size: 18px;
+    /* Increase the font-size */
+    color: black;
+    /* Add a black text color */
+}

@@ -1,11 +1,11 @@
 <%- include('header.ejs') %>
     <% if (saisie) { %>
-        <div class="container-fluid align-items-center">
+        <div>
             <div class="form-group">
 
-                <form action="/createqr/scan" method="POST" class="form" style="margin-left:30%; margin-right:30%">
+                <form action="/createqr/scan" method="POST" class="form">
 
-                    <div class="form-group">
+                    <div>
                         <label for="identite">Identité</label>
                         <br>
                         <select name="identite" id="identite">
@@ -15,25 +15,33 @@
                             <option value="Alexandre Alleaume">Alexandre Alleaume</option>
                             <option value="Bryan Guillot">Bryan Guillot</option>
                         </select>
+                        <label style="margin-left: 138px;" for="salle">Salle</label>
+                        <select name="salle" id="salle">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div>
+
                     </div>
 
-                    <div class="form-group">
+                    <div>
                         <label for="code">Code de sécurité :</label>
                         <input type="password" class="form-control" name="code" id="code" placeholder="Entrez votre code à l'abri des regards..." required>
                     </div>
 
-                    <div class="form-group">
-                        <label for="salle">Salle</label>
-                        <input type="number" class="form-control" name="salle" id="salle" placeholder="Entrez la salle d'intervention" required>
-                    </div>
-                    <div class="form-group">
+
+                    <div>
                         <label for="horaireEntree">Horaire d'entrée</label>
                         <input type="datetime-local" class="form-control" name="horaireEntree" id="horaireEntree" placeholder="Entrez l'heure de sortie" required>
                     </div>
 
-                    <div class="form-group">
+                    <div>
                         <br/>
-                        <button type="submit" class="btn btn-outline-primary">Générer le QRCode</button>
+                        <button type="submit" class="buttonnephy">GENERER QRCODE</button>
                     </div>
                 </form>
 

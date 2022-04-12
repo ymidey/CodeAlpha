@@ -1,5 +1,15 @@
 <%- include('header.ejs') %>
 
+    <div style="margin-left: 7px; margin-top: 7px;" class="inputcontrol">
+        <label for="search">
+            <img src="">
+        </label>
+        <input type="text" onkeyup="recherche()" id="myInput" placeholder="Rechercher une intervention">
+    </div>
+
+
+    </div>
+
     <div class="container-fluid d-flex align-items-center flex-column">
         <table class="table table-striped">
             <thead>
@@ -16,27 +26,42 @@
 
             <tbody>
                 <% Interventions.forEach(function(entry) { %>
-                    <tr>
+                    <tr id="myTR">
                         <td>
-                            <%= entry.identite %>
+                            <p>
+                                <%= entry.identite %>
+                            </p>
                         </td>
                         <td>
-                            <%= entry.code %>
+                            <p>
+                                <%= entry.code %>
+                            </p>
                         </td>
                         <td>
-                            <%= entry.salle %>
+                            <p>
+                                <%= entry.salle %>
+                            </p>
                         </td>
                         <td>
-                            <%= new Date(entry.heureDebutPrevu).getDate()+'-'+(new Date(entry.heureDebutPrevu).getMonth()+1)+'-'+new Date(entry.heureDebutPrevu).getFullYear();%>
+                            <p>
+                                <%= new Date(entry.heureDebutPrevu).getDate()+'-'+(new Date(entry.heureDebutPrevu).getMonth()+1)+'-'+new Date(entry.heureDebutPrevu).getFullYear();%>
+                            </p>
                         </td>
                         <td>
-                            <%= new Date(entry.heureDebutPrevu).getHours()+' h '+new Date(entry.heureDebutPrevu).getMinutes();%>
+                            <p>
+                                <%= new Date(entry.heureDebutPrevu).getHours()+' h '+new Date(entry.heureDebutPrevu).getMinutes();%>
+                            </p>
+
                         </td>
                         <td>
-                            <%= new Date(entry.heureEntreeReelle).getHours()+' h '+new Date(entry.heureEntreeReelle).getMinutes();%>
+                            <p>
+                                <%= new Date(entry.heureEntreeReelle).getHours()+' h '+new Date(entry.heureEntreeReelle).getMinutes();%>
+                            </p>
                         </td>
                         <td>
-                            <%= new Date(entry.heureSortieReelle).getHours()+' h '+new Date(entry.heureSortieReelle).getMinutes();%>
+                            <p>
+                                <%= new Date(entry.heureSortieReelle).getHours()+' h '+new Date(entry.heureSortieReelle).getMinutes();%>
+                            </p>
                         </td>
                     </tr>
                     <% }); %>

@@ -6,7 +6,7 @@ const nodemailer = require("nodemailer");
 const logger = require('./logger.js');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     res.render('createqr', { title: 'CodeAlpha', saisie: true });
 });
 
@@ -20,7 +20,7 @@ router.post("/scan", (req, res, next) => {
     let contenuQR = input_identite + "\n" + input_code + "\n" + input_salle + "\n" + input_horaire_debut;
 
     let interventions = new intervention({ heureDebutPrevu: input_horaire_debut, salle: input_salle, code: input_code, identite: input_identite, heureEntreeReelle: input_entree_reelle, heureSortieReelle: input_sortie_reelle });
-    interventions.save(function(err, interventions) {
+    interventions.save(function (err, interventions) {
         if (err) return console.error(err);
         console.log(interventions.name + " saved to bookstore collection.");
     });
@@ -34,8 +34,8 @@ router.post("/scan", (req, res, next) => {
             host: "smtp.mailtrap.io",
             port: 2525,
             auth: {
-                user: "5bd491f8d6dc20",
-                pass: "d8b17bf2561cc0"
+                user: "da29124109cb96",
+                pass: "324a459bac6219"
             }
         });
 
@@ -51,7 +51,7 @@ router.post("/scan", (req, res, next) => {
             }]
         };
 
-        transport.sendMail(mailOptions, function(error, info) {
+        transport.sendMail(mailOptions, function (error, info) {
             if (error) {
                 logger.error("mail pas bien envoyé");
                 console.log(error);

@@ -29,24 +29,27 @@
                     </div>
 
                     <div>
-                        <label for="code">Code de sécurité :</label>
-                        <input type="password" class="form-control" name="code" id="code" placeholder="Entrez votre code à l'abri des regards..." required>
+                        <label for="code">Code de l'intervenant :</label>
+                        <input type="password" class="form-control" name="code" id="code"
+                            placeholder="Entrez le code de l'intervenant" required>
                     </div>
 
 
                     <div>
                         <label for="horaireEntree">Horaire d'entrée</label>
-                        <input type="datetime-local" class="form-control" name="horaireEntree" id="horaireEntree" placeholder="Entrez l'heure de sortie" required>
+                        <input type="datetime-local" class="form-control" name="horaireEntree" id="horaireEntree"
+                            placeholder="Entrez l'heure de sortie" required>
                     </div>
 
                     <div>
-                        <br/>
-                        <button type="submit" class="buttonnephy">GENERER QRCODE</button>
+                        <br />
+                        <button type="submit" class="buttonnephy">Generer le QRCode</button>
                     </div>
                 </form>
 
                 <% } else { %>
                     <div class="qr-code">
                         <h3>Voici le QR Code généré :</h3>
-                        <img id="qrcode" src=<%=qr_code %> alt="QR Code"></div>
+                        <img id="qrcode" src=<%=qr_code %> alt="QR Code">
+                    </div>
                     <% } %>

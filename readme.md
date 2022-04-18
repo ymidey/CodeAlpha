@@ -76,7 +76,7 @@ Pour finir, lancer votre projet avec la commande :
 
 ## *Diagramme UML des entités*
 
-![](https://cdn.discordapp.com/attachments/391192279253254166/955827265726464050/DiagrammeUML.PNG)
+<img src="https://cdn.discordapp.com/attachments/391192279253254166/960532032415486102/unknown.png" style="zoom:150%;" />
 
 ## *URI Supportées*
 
@@ -86,8 +86,270 @@ Pour finir, lancer votre projet avec la commande :
 
 ## *Modèle pour la collection intervenants*
 
-![](https://cdn.discordapp.com/attachments/391192279253254166/955779710477041704/unknown.png)
+![](https://cdn.discordapp.com/attachments/391192279253254166/960533575109861437/ModelsIntervenantsPNG.PNG)
 
 ## *Modèle pour la collection interventions*
 
-![](https://cdn.discordapp.com/attachments/391192279253254166/955815314166284288/ModelsInterventions.PNG)
+![](https://cdn.discordapp.com/attachments/391192279253254166/960533600565071973/ModelsInterventions.PNG)
+
+
+
+## *Seconde partie : Réalisation*
+
+### Affichage du personelles
+
+La fonction ci-dessous situé dans le fichier <code>intervenant.js</code> fait appel au models "Intervenant" afin de récupérer les données stocker dans la table Intervenant de notre base de données.
+
+````js
+var express = require('express');
+var router = express.Router();
+const Intervenants = require("../models/Intervenant");
+
+
+// Page racine
+router.get("/", async function(req, res, next) {
+    Intervenants.find({}, function(err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.render("Intervenants", {
+                title: "Intervenants",
+                Intervenants: result,
+            });
+            console.log(result);
+        }
+    });
+});
+
+module.exports = router;
+````
+
+On affiche ensuite dans le fichier <code>intervenant.ejs</code> les intervenants dans un tableau grâce à une boucle forEach qui parcours "Intervenants"
+
+````ejs
+<div class="container-fluid d-flex align-items-center flex-column">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Identité</th>
+                    <th>Code</th>
+                    <th>Poste</th>
+                    <th>Mail</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% Intervenants.forEach(function(entry) { %>
+                    <tr>
+                        <td>
+                            <%= entry.identite %>
+                        </td>
+                        <td>
+                            <%= entry.code %>
+                        </td>
+                        <td>
+                            <%= entry.poste %>
+                        </td>
+                        <td>
+                            <%= entry.mail %>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+````
+
+Ce qui donne le résultat suivant : 
+
+![](https://cdn.discordapp.com/attachments/391192279253254166/960551436993839224/unknown.png)
+
+### Création du QR Code
+
+Pour mettre en place un système de création de QRCode pour l'opérateur nous allons tout d'abord créé notre interface <code>createqr.ejs</code>.
+
+En fonction de la valeur de la variable <code>saisie</code>, il va être affiché, soit un formulaire permettant de données les informations permettant de générer un QRCode en envoyant ses données dans l'url <code>/createqr/scan</code> ou alors si la variable <code>saisie</code> est égal à false, il sera affiché sur la page le QrCode généré suite aux informations reçu grâce au formulaire.
+
+```ejs
+<% if (saisie) { %>
+        <div class="container-fluid align-items-center">
+            <div class="form-group">
+
+                <form action="/createqr/scan" method="POST" class="form" style="margin-left:30%; margin-right:30%">
+
+                    <div class="form-group">
+                        <label for="identite">Identité</label>
+                        <input type="text" class="form-control" name="identite" id="identite"
+                            placeholder="Entrez votre prénom suivi de votre nom" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="code">Code de sécurité :</label>
+                        <input type="password" class="form-control" name="code" id="code"
+                            placeholder="Entrez votre code à l'abri des regards..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="salle">Salle</label>
+                        <input type="text" class="form-control" name="salle" id="salle"
+                            placeholder="Entrez la salle d'intervention" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="horaireEntree">Horaire d'entrée</label>
+                        <input type="datetime-local" class="form-control" name="horaireEntree" id="horaireEntree"
+                            placeholder="Entrez l'heure de sortie" required>
+                    </div>
+
+                    <div class="form-group">
+                        <br />
+                        <button type="submit" class="btn btn-outline-primary">Générer le QRCode</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+<% } else { %>
+       <h3>Voici le QR Code généré :</h3>
+       <img src=<%=qr_code %> alt="QR Code">
+<% } %>
+```
+
+Ce qui donne sur la page ce formulaire : 
+
+![](https://cdn.discordapp.com/attachments/391192279253254166/960559139707301909/Formulaire.PNG)
+
+### Affichage des interventions 
+
+La fonction ci-dessous situé dans le fichier <code>intervenantion.js</code> fait appel au models "Intervention" afin de récupérer les données stocker dans la table Intervention de notre base de données.
+
+````js
+var express = require('express');
+var router = express.Router();
+const interventions = require("../models/intervention");
+
+// Page racine
+router.get("/", async function(req, res, next) {
+    interventions.find({}, function(err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.render("interventions", {
+                title: "interventions",
+                Interventions: result,
+            });
+            console.log(result);
+        }
+    });
+});
+````
+
+On affiche ensuite dans le fichier <code>intervention.ejs</code>les interventions dans un tableau grâce à une boucle forEach qui parcours "Interventions"
+
+````ejs
+<div class="container-fluid d-flex align-items-center flex-column">
+        <table class="table table-striped" id="myTable">
+            <thead>
+                <tr class="header">
+                    <th>Identité</th>
+                    <th>Code</th>
+                    <th>Salle</th>
+                    <th>Date</th>
+                    <th>Heure d'entrée prévue</th>
+                    <th>Heure d'entrée Réelle</th>
+                    <th>Heure de sortie Réelle</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% Interventions.forEach(function(entry) { %>
+                    <tr>
+                        <td>
+                            <p>
+                                <%= entry.identite %>
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                <%= entry.code %>
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                <%= entry.salle %>
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                <%= new Date(entry.heureDebutPrevu).getDate()+'-'+(new Date(entry.heureDebutPrevu).getMonth()+1)+'-'+new Date(entry.heureDebutPrevu).getFullYear();%>
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                <%= new Date(entry.heureDebutPrevu).getHours()+' h '+new Date(entry.heureDebutPrevu).getMinutes();%>
+                            </p>
+
+                        </td>
+                        <td>
+                            <p>
+                                <%= new Date(entry.heureEntreeReelle).getHours()+' h '+new Date(entry.heureEntreeReelle).getMinutes();%>
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                <%= new Date(entry.heureSortieReelle).getHours()+' h '+new Date(entry.heureSortieReelle).getMinutes();%>
+                            </p>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+````
+
+Ce qui donne le résultat suivant : 
+
+![](https://cdn.discordapp.com/attachments/391192279253254166/965644325608362004/TableauInterventions.PNG)
+
+### Filtre de recherche
+
+Pour une meilleur recherche des interventions en fonction des intervenants, nous avons mis-en place un formulaire de recherche dans <code>interventions.ejs</code> :
+
+````js
+ <div style="margin-left: 7px; margin-top: 7px;" class="inputcontrol">
+        <label for="search">
+            <img src="">
+        </label>
+        <input type="text" onkeyup="recherche()" id="myInput" placeholder="Rechercher une intervention">
+    </div>
+
+<script>
+            function recherche() {
+                // Declare variables
+                console.log("on est dedans");
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+
+                // Loop through all table rows, and hide those who don't match the search query
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
+````
+
+
+
+Sans filtre, toutes les interventions de tout les intervenants sont affichés
+
+![](https://cdn.discordapp.com/attachments/391192279253254166/965693364546727966/FormRechercheVide.PNG)
+
+Avec le filtre "Yannick" seul les interventions des intervenants contenant "yannick" dans leur nom sont affichés.
+
+![](https://cdn.discordapp.com/attachments/391192279253254166/965694323020664933/FormRecherche.PNG)
